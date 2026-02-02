@@ -1,0 +1,33 @@
+# ===== Node & JS =====
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# ===== Environment variables =====
+.env
+.env.local
+.env.development
+.env.production
+
+# ===== Next.js =====
+.next/
+out/
+
+# ===== Build outputs =====
+dist/
+build/
+
+# ===== OS / Editor junk =====
+.DS_Store
+Thumbs.db
+
+# ===== Logs =====
+logs/
+*.log
+
+# ===== Coverage =====
+coverage/
+
+# ===== IDE configs =====
+.vscode/
+.idea/
