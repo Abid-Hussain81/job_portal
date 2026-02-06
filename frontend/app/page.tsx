@@ -40,92 +40,129 @@ export default function Home() {
 
   // Show landing page for non-authenticated users
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <div className="min-h-screen bg-white font-sans">
       <Navbar />
 
-      {/* Hero Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="text-center">
-          <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 mb-6">
-            Find Your <span className="text-blue-600">Dream Job</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto">
-            Connect with top employers and discover opportunities that match your skills and aspirations.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/register"
-              className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl transition-all"
-            >
-              Get Started
-            </Link>
-            <Link
-              href="/jobs"
-              className="inline-flex items-center justify-center px-8 py-4 border-2 border-blue-600 text-lg font-medium rounded-lg text-blue-600 bg-white hover:bg-blue-50 shadow-lg hover:shadow-xl transition-all"
-            >
-              Browse Jobs
-            </Link>
-          </div>
-        </div>
-
-        {/* Features Section */}
-        <div className="mt-24 grid md:grid-cols-3 gap-8">
-          <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow">
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">For Candidates</h3>
-            <p className="text-gray-600">
-              Browse thousands of jobs, apply with ease, and track your applications in one place.
+      {/* Hero Section - Professional Search Experience */}
+      <div className="bg-bg-soft border-b border-border py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-black text-secondary mb-6 leading-tight">
+              One search, <span className="text-primary">millions of jobs.</span>
+            </h1>
+            <p className="text-lg md:text-xl text-muted mb-12">
+              The #1 job site in the world with over 300M unique visitors every month.
             </p>
-          </div>
 
-          <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow">
-            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-              <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-              </svg>
+            {/* Premium Search Container */}
+            <div className="bg-white p-2 rounded-xl shadow-lg flex flex-col md:flex-row gap-2 border border-border">
+              <div className="flex-1 flex items-center px-4 py-3 border-b md:border-b-0 md:border-r border-gray-100">
+                <svg className="w-5 h-5 text-muted mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input
+                  type="text"
+                  placeholder="Job title, keywords, or company"
+                  className="w-full focus:outline-none text-secondary font-medium"
+                />
+              </div>
+              <div className="flex-1 flex items-center px-4 py-3">
+                <svg className="w-5 h-5 text-muted mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <input
+                  type="text"
+                  placeholder="City or remote"
+                  className="w-full focus:outline-none text-secondary font-medium"
+                />
+              </div>
+              <button className="bg-primary hover:bg-primary-hover text-white px-8 py-3 rounded-lg font-bold transition-all shadow-sm">
+                Find Jobs
+              </button>
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">For Employers</h3>
-            <p className="text-gray-600">
-              Post jobs, review applications, and find the perfect candidates for your team.
+
+            <p className="mt-6 text-sm text-muted">
+              <span className="font-bold text-secondary">Post your resume</span> – It only takes a few seconds
             </p>
-          </div>
-
-          <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow">
-            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-              <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Secure & Reliable</h3>
-            <p className="text-gray-600">
-              Your data is protected with industry-standard security and encryption.
-            </p>
-          </div>
-        </div>
-
-        {/* Stats Section */}
-        <div className="mt-24 bg-white rounded-2xl shadow-2xl p-12">
-          <div className="grid md:grid-cols-3 gap-8 text-center">
-            <div>
-              <div className="text-4xl font-bold text-blue-600 mb-2">10,000+</div>
-              <div className="text-gray-600">Active Jobs</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-purple-600 mb-2">5,000+</div>
-              <div className="text-gray-600">Companies</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-green-600 mb-2">50,000+</div>
-              <div className="text-gray-600">Candidates</div>
-            </div>
           </div>
         </div>
       </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        {/* Features Section - Structured & Premium */}
+        <div className="grid md:grid-cols-2 gap-12 items-center mb-32">
+          <div>
+            <h2 className="text-3xl font-black text-secondary mb-6">Explore the right <span className="text-primary">career path</span> for you</h2>
+            <div className="space-y-6">
+              <div className="flex items-start">
+                <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center shrink-0">
+                  <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-xl font-bold text-secondary">Secure & Verified</h3>
+                  <p className="text-muted">Every job posting is manually reviewed by our expert team to ensure maximum reliability.</p>
+                </div>
+              </div>
+              <div className="flex items-start">
+                <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center shrink-0">
+                  <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-xl font-bold text-secondary">Instant Applications</h3>
+                  <p className="text-muted">Apply to jobs with just one click using your saved profile and professional resume.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-bg-soft p-6 rounded-2xl border border-border mt-8">
+              <div className="text-3xl font-black text-primary mb-1">10k+</div>
+              <div className="text-sm font-bold text-muted uppercase tracking-wider">Active Jobs</div>
+            </div>
+            <div className="bg-secondary p-6 rounded-2xl text-white">
+              <div className="text-3xl font-black mb-1">5k+</div>
+              <div className="text-sm font-bold opacity-80 uppercase tracking-wider">Companies</div>
+            </div>
+            <div className="bg-primary p-6 rounded-2xl text-white">
+              <div className="text-3xl font-black mb-1">50k+</div>
+              <div className="text-sm font-bold opacity-80 uppercase tracking-wider">Candidates</div>
+            </div>
+            <div className="bg-bg-soft p-6 rounded-2xl border border-border mt-[-2rem]">
+              <div className="text-3xl font-black text-secondary mb-1">2M+</div>
+              <div className="text-sm font-bold text-muted uppercase tracking-wider">Matches</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Call to Action for Employers */}
+        <div className="bg-secondary rounded-3xl p-8 md:p-16 text-center text-white relative overflow-hidden shadow-2xl">
+          <div className="relative z-10">
+            <h2 className="text-3xl md:text-4xl font-black mb-6">Hiring? We can help.</h2>
+            <p className="text-xl opacity-90 mb-10 max-w-2xl mx-auto">
+              Reach millions of job seekers. Get your job postings in front of the right candidates.
+            </p>
+            <Link
+              href="/register"
+              className="inline-block bg-primary hover:bg-primary-hover text-white px-10 py-4 rounded-xl font-black text-lg transition-all transform hover:scale-105"
+            >
+              Post a Job Now
+            </Link>
+          </div>
+          {/* Decorative Elements */}
+          <div className="absolute top-[-10%] right-[-5%] w-64 h-64 bg-primary opacity-20 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-[-10%] left-[-5%] w-64 h-64 bg-blue-400 opacity-10 rounded-full blur-3xl"></div>
+        </div>
+      </div>
+
+      {/* Professional Footer-like copyright */}
+      <footer className="border-t border-border py-8 text-center text-sm text-muted bg-bg-soft">
+        <p>© 2026 JobPortal. Inspired by excellence in recruitment.</p>
+      </footer>
     </div>
   );
 }

@@ -12,6 +12,7 @@ export interface User {
     role: 'candidate' | 'employer' | 'admin';
     isApproved: boolean;
     company?: string;
+    phone?: string;
 }
 
 export interface RegisterData {

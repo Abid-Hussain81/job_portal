@@ -11,9 +11,19 @@ const roleCheck = require('../middleware/roleCheck');
 
 // @route   GET /api/profile/me
 // @desc    Get current user's profile
-// @access  Private (Candidate only)
-router.get('/me', authenticate, roleCheck(['candidate']), async (req, res, next) => {
+// @access  Private (Candidate, Admin)
+router.get('/me', authenticate, roleCheck(['candidate', 'admin']), async (req, res, next) => {
   try {
+    if (req.user.role === 'admin') {
+      return res.json({
+        success: true,
+        data: {
+          user: req.user,
+          isAdmin: true
+        },
+      });
+    }
+
     let profile = await Profile.findOne({ user: req.user._id });
     
     if (!profile) {
@@ -32,9 +42,23 @@ router.get('/me', authenticate, roleCheck(['candidate']), async (req, res, next)
 
 // @route   PUT /api/profile/me
 // @desc    Update current user's profile
-// @access  Private (Candidate only)
-router.put('/me', authenticate, roleCheck(['candidate']), async (req, res, next) => {
+// @access  Private (Candidate, Admin)
+router.put('/me', authenticate, roleCheck(['candidate', 'admin']), async (req, res, next) => {
   try {
+    if (req.user.role === 'admin') {
+      const { name, phone } = req.body;
+      const user = await User.findById(req.user._id);
+      if (name) user.name = name;
+      if (phone) user.phone = phone;
+      await user.save();
+      
+      return res.json({
+        success: true,
+        message: 'Admin profile summary updated',
+        data: { user },
+      });
+    }
+
     let profile = await Profile.findOne({ user: req.user._id });
 
     if (!profile) {

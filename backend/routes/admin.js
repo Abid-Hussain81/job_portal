@@ -39,6 +39,16 @@ router.delete('/users/:id', authenticate, roleCheck(['admin']), adminController.
 // @access  Private (Admin only)
 router.get('/jobs', authenticate, roleCheck(['admin']), adminController.getAllJobsAdmin);
 
+// @route   POST /api/admin/users
+// @desc    Create a new admin
+// @access  Private (Admin only)
+router.post('/users', authenticate, roleCheck(['admin']), adminController.createAdmin);
+
+// @route   PUT /api/admin/users/:id/role
+// @desc    Update user role
+// @access  Private (Admin only)
+router.put('/users/:id/role', authenticate, roleCheck(['admin']), adminController.updateUserRole);
+
 // @route   PUT /api/admin/jobs/:id/status
 // @desc    Update job status
 // @access  Private (Admin only)

@@ -235,39 +235,84 @@ exports.getAllJobsAdmin = async (req, res, next) => {
 };
 
 /**
- * @route   PUT /api/admin/jobs/:id/status
- * @desc    Update job status (moderate)
+ * @route   POST /api/admin/users
+ * @desc    Create a new admin user
  * @access  Private (Admin only)
  */
-exports.updateJobStatus = async (req, res, next) => {
+exports.createAdmin = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const { status } = req.body;
+    const { name, email, password, phone } = req.body;
 
-    if (!['active', 'closed', 'pending'].includes(status)) {
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
       return res.status(400).json({
         success: false,
-        message: 'Invalid status',
+        message: 'Email already registered',
       });
     }
 
-    const job = await Job.findByIdAndUpdate(
-      id,
-      { status },
-      { new: true }
-    );
+    // Create admin user
+    const user = await User.create({
+      name,
+      email,
+      password,
+      role: 'admin',
+      phone,
+      isApproved: true,
+      isActive: true,
+    });
 
-    if (!job) {
+    res.status(201).json({
+      success: true,
+      message: 'Admin user created successfully',
+      data: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @route   PUT /api/admin/users/:id/role
+ * @desc    Update user role
+ * @access  Private (Admin only)
+ */
+exports.updateUserRole = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { role } = req.body;
+
+    if (!['candidate', 'employer', 'admin'].includes(role)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid role',
+      });
+    }
+
+    const user = await User.findById(id);
+    if (!user) {
       return res.status(404).json({
         success: false,
-        message: 'Job not found',
+        message: 'User not found',
       });
     }
+
+    user.role = role;
+    // Auto approve if changing from employer to something else
+    if (role !== 'employer') user.isApproved = true;
+    
+    await user.save();
 
     res.json({
       success: true,
-      message: 'Job status updated',
-      data: job,
+      message: `User role updated to ${role}`,
+      data: user,
     });
   } catch (error) {
     next(error);
