@@ -31,30 +31,17 @@ exports.getDashboard = async (req, res, next) => {
     const pendingApplications = await Application.countDocuments({ status: 'pending' });
     const shortlistedApplications = await Application.countDocuments({ status: 'shortlisted' });
 
-    // Recent activities - wrap in try-catch for safety
-    let recentJobs = [];
-    let recentApplications = [];
-    
-    try {
-      recentJobs = await Job.find()
-        .populate('employer', 'name company')
-        .sort({ createdAt: -1 })
-        .limit(5)
-        .lean();
-    } catch (err) {
-      console.error('Error fetching recent jobs:', err.message);
-    }
+    // Recent activities
+    const recentJobs = await Job.find()
+      .populate('employer', 'name company')
+      .sort({ createdAt: -1 })
+      .limit(5);
 
-    try {
-      recentApplications = await Application.find()
-        .populate('candidate', 'name email')
-        .populate('job', 'title company')
-        .sort({ createdAt: -1 })
-        .limit(5)
-        .lean();
-    } catch (err) {
-      console.error('Error fetching recent applications:', err.message);
-    }
+    const recentApplications = await Application.find()
+      .populate('candidate', 'name email')
+      .populate('job', 'title company')
+      .sort({ createdAt: -1 })
+      .limit(5);
 
     res.json({
       success: true,
@@ -69,12 +56,7 @@ exports.getDashboard = async (req, res, next) => {
       },
     });
   } catch (error) {
-    console.error('Dashboard error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Failed to fetch dashboard data',
-      error: error.message
-    });
+    next(error);
   }
 };
 

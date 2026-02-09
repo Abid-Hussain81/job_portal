@@ -61,8 +61,24 @@ const userSchema = new mongoose.Schema(
   },
   {
     timestamps: true, // Adds createdAt and updatedAt
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
   }
 );
+
+/**
+ * Virtual field for user status
+ * Combines isActive and isApproved into a single status field for frontend
+ */
+userSchema.virtual('status').get(function() {
+  if (!this.isApproved && this.role === 'employer') {
+    return 'pending';
+  }
+  if (!this.isActive) {
+    return 'inactive';
+  }
+  return 'active';
+});
 
 /**
  * Pre-save middleware to hash password

@@ -39,7 +39,18 @@ export default function AdminDashboard() {
     const fetchStats = async () => {
         try {
             const response = await api.get('/admin/dashboard');
-            setStats(response.data.data);
+            const data = response.data.data;
+
+            // Map backend response structure to frontend state
+            setStats({
+                totalUsers: data.stats.users.total,
+                totalCandidates: data.stats.users.candidates,
+                totalEmployers: data.stats.users.employers,
+                pendingEmployers: data.stats.users.pendingEmployers,
+                totalJobs: data.stats.jobs.total,
+                activeJobs: data.stats.jobs.active,
+                totalApplications: data.stats.applications.total,
+            });
         } catch (error) {
             console.error('Failed to fetch stats:', error);
         } finally {
