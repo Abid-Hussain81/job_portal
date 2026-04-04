@@ -28,7 +28,11 @@ api.interceptors.response.use(
             // Don't redirect to login if we're just checking auth status
             const isCheckingAuth = originalRequest.url?.includes('/auth/me');
 
-            if (isCheckingAuth) {
+            // Don't refresh on auth routes
+            const isAuthRequest = originalRequest.url?.includes('/auth/login') || 
+                                  originalRequest.url?.includes('/auth/register');
+
+            if (isCheckingAuth || isAuthRequest) {
                 // Just return the error, don't try to refresh or redirect
                 return Promise.reject(error);
             }

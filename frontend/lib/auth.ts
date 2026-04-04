@@ -13,6 +13,7 @@ export interface User {
     isApproved: boolean;
     company?: string;
     phone?: string;
+    profilePicture?: string;
 }
 
 export interface RegisterData {

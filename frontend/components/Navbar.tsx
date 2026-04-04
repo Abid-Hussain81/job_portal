@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 
+const API_BASE = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000';
+
 /**
  * Navbar Component
  * Role-based navigation with authentication state
@@ -14,6 +16,14 @@ import { useRouter } from 'next/navigation';
 export default function Navbar() {
     const { user, logout } = useAuth();
     const router = useRouter();
+
+    const getInitials = (name: string) => {
+        if (!name) return '?';
+        const parts = name.trim().split(/\s+/);
+        if (parts.length === 0) return '?';
+        if (parts.length === 1) return parts[0][0].toUpperCase();
+        return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    };
 
     const handleLogout = async () => {
         try {
@@ -157,13 +167,29 @@ export default function Navbar() {
 
                                 {/* User Profile & Logout */}
                                 <div className="flex items-center space-x-4">
-                                    <div className="flex flex-col items-end">
-                                        <span className="text-sm font-bold text-secondary leading-none">
-                                            {user.name}
-                                        </span>
-                                        <span className="text-[10px] uppercase tracking-wider font-bold text-primary mt-1">
-                                            {user.role}
-                                        </span>
+                                    <div className="flex items-center space-x-3">
+                                        <div className="flex flex-col items-end">
+                                            <span className="text-sm font-bold text-secondary leading-none">
+                                                {user.name}
+                                            </span>
+                                            <span className="text-[10px] uppercase tracking-wider font-bold text-primary mt-1">
+                                                {user.role}
+                                            </span>
+                                        </div>
+                                        {/* Avatar Bubble */}
+                                        <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center border border-primary/20 shrink-0 overflow-hidden">
+                                            {user.profilePicture ? (
+                                                <img
+                                                    src={user.profilePicture.startsWith('http') ? user.profilePicture : `${API_BASE}${user.profilePicture}`}
+                                                    alt={user.name}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            ) : (
+                                                <span className="text-primary font-black text-sm tracking-widest">
+                                                    {getInitials(user.name)}
+                                                </span>
+                                            )}
+                                        </div>
                                     </div>
                                     <button
                                         onClick={handleLogout}
