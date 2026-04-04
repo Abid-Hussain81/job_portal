@@ -96,6 +96,7 @@ exports.register = [
           email: user.email,
           role: user.role,
           isApproved: user.isApproved,
+          profilePicture: user.profilePicture,
         },
       });
     } catch (error) {
@@ -179,6 +180,7 @@ exports.login = [
           email: user.email,
           role: user.role,
           isApproved: user.isApproved,
+          profilePicture: user.profilePicture,
         },
       });
     } catch (error) {
