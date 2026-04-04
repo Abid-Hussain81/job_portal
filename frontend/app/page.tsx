@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
@@ -16,13 +16,23 @@ import Link from 'next/link';
 export default function Home() {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [locationQuery, setLocationQuery] = useState('');
+
+  const handleSearch = () => {
+    const params = new URLSearchParams();
+    if (searchQuery) params.append('search', searchQuery);
+    if (locationQuery) params.append('location', locationQuery);
+    router.push(`/jobs?${params.toString()}`);
+  };
 
   useEffect(() => {
     if (!loading && user) {
       // Redirect based on role
       if (user.role === 'candidate') {
         router.push('/candidate/jobs');
-      } else if (user.role === 'employer') {
+      } else if (user.role === 'employer' && user.isApproved) {
+        // Only redirect approved employers
         router.push('/employer/dashboard');
       } else if (user.role === 'admin') {
         router.push('/admin/dashboard');
@@ -64,6 +74,9 @@ export default function Home() {
                   type="text"
                   placeholder="Job title, keywords, or company"
                   className="w-full focus:outline-none text-secondary font-medium"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 />
               </div>
               <div className="flex-1 flex items-center px-4 py-3">
@@ -75,9 +88,15 @@ export default function Home() {
                   type="text"
                   placeholder="City or remote"
                   className="w-full focus:outline-none text-secondary font-medium"
+                  value={locationQuery}
+                  onChange={(e) => setLocationQuery(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 />
               </div>
-              <button className="bg-primary hover:bg-primary-hover text-white px-8 py-3 rounded-lg font-bold transition-all shadow-sm">
+              <button
+                onClick={handleSearch}
+                className="bg-primary hover:bg-primary-hover text-white px-8 py-3 rounded-lg font-bold transition-all shadow-sm"
+              >
                 Find Jobs
               </button>
             </div>

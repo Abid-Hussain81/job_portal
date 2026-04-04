@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 /**
  * Protected Route Component
@@ -23,7 +24,7 @@ interface ProtectedRouteProps {
 }
 
 export default function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) {
-    const { user, loading } = useAuth();
+    const { user, loading, logout } = useAuth();
     const router = useRouter();
 
     useEffect(() => {
@@ -81,12 +82,27 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
                     <p className="text-gray-600 mb-6">
                         Your employer account is currently under review. You'll be able to post jobs once an admin approves your account.
                     </p>
-                    <a
-                        href="/"
-                        className="inline-block bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700"
-                    >
-                        Go to Home
-                    </a>
+                    <div className="flex flex-col space-y-3">
+                        <Link
+                            href="/"
+                            className="inline-block bg-primary text-white px-6 py-2 rounded-md hover:bg-primary-hover transition-colors"
+                        >
+                            Go to Home
+                        </Link>
+                        <button
+                            onClick={async () => {
+                                try {
+                                    await logout();
+                                    router.push('/login');
+                                } catch (error) {
+                                    console.error('Logout failed:', error);
+                                }
+                            }}
+                            className="text-gray-500 hover:text-gray-700 text-sm font-medium"
+                        >
+                            Sign Out
+                        </button>
+                    </div>
                 </div>
             </div>
         );
