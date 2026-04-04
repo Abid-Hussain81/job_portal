@@ -87,12 +87,6 @@ export default function Navbar() {
                                         >
                                             My Applications
                                         </Link>
-                                        <Link
-                                            href="/candidate/profile"
-                                            className="text-muted hover:text-primary px-3 py-2 rounded-md text-sm font-semibold transition-colors"
-                                        >
-                                            Profile
-                                        </Link>
                                     </>
                                 )}
 
@@ -116,12 +110,6 @@ export default function Navbar() {
                                             className="text-muted hover:text-primary px-3 py-2 rounded-md text-sm font-semibold transition-colors"
                                         >
                                             Applicants
-                                        </Link>
-                                        <Link
-                                            href="/employer/profile"
-                                            className="text-muted hover:text-primary px-3 py-2 rounded-md text-sm font-semibold transition-colors"
-                                        >
-                                            Company Profile
                                         </Link>
                                     </>
                                 )}
@@ -153,12 +141,6 @@ export default function Navbar() {
                                         >
                                             Approvals
                                         </Link>
-                                        <Link
-                                            href="/admin/profile"
-                                            className="text-muted hover:text-primary px-3 py-2 rounded-md text-sm font-semibold transition-colors"
-                                        >
-                                            My Profile
-                                        </Link>
                                     </>
                                 )}
 
@@ -176,20 +158,22 @@ export default function Navbar() {
                                                 {user.role}
                                             </span>
                                         </div>
-                                        {/* Avatar Bubble */}
-                                        <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center border border-primary/20 shrink-0 overflow-hidden">
-                                            {user.profilePicture ? (
-                                                <img
-                                                    src={user.profilePicture.startsWith('http') ? user.profilePicture : `${API_BASE}${user.profilePicture}`}
-                                                    alt={user.name}
-                                                    className="w-full h-full object-cover"
-                                                />
-                                            ) : (
-                                                <span className="text-primary font-black text-sm tracking-widest">
-                                                    {getInitials(user.name)}
-                                                </span>
-                                            )}
-                                        </div>
+                                        {/* Avatar Link to Profile */}
+                                        <Link href="/profile" className="block transform transition-transform hover:scale-105 active:scale-95">
+                                            <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center border border-primary/20 shrink-0 overflow-hidden shadow-sm hover:shadow relative group">
+                                                {user.profilePicture ? (
+                                                    <img
+                                                        src={user.profilePicture.startsWith('http') ? user.profilePicture : `${API_BASE}${user.profilePicture}`}
+                                                        alt={user.name}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                ) : (
+                                                    <span className="text-primary font-black text-sm tracking-widest group-hover:text-primary-hover">
+                                                        {getInitials(user.name)}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </Link>
                                     </div>
                                     <button
                                         onClick={handleLogout}
